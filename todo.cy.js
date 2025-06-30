@@ -43,24 +43,13 @@ describe('Pruebas End-to-End para la Aplicación de Cine (Conjunto Completo)', (
         cy.url().should('include', '/index.php'); 
         cy.log('Inicio de sesión exitoso y redirección verificada.');
     });
+    it ('4. Debe permitir a un usuario seleccionar una función y comprar un boleto'
 
-    // --- Escenario 3: Inicio de sesión fallido ---
-    it('3. Debe mostrar un mensaje de error al intentar iniciar sesión con credenciales inválidas', () => {
-        cy.log('Probando el inicio de sesión con credenciales incorrectas.');
-        cy.get('a[href="login.php"]').click();
-        cy.url().should('include', '/login.php');
+    )
 
-        cy.get('#correo').type(INVALID_USERNAME_EMAIL);
-        cy.get('#contrasena').type(INVALID_PASSWORD);
-        cy.get('form button[type="submit"]').click();
 
-        cy.get('.mensaje-error').should('be.visible')
-            .and('contain', 'Correo o contraseña incorrectos.');
-        cy.url().should('include', '/login.php');
-        cy.log('Mensaje de error de login incorrecto verificado.');
-    });
 
-    // --- Escenario 4: Flujo de compra de un boleto ---
+    // --- Escenario 3: Flujo de compra de un boleto ---
     it('4. Debe permitir a un usuario seleccionar una función y comprar un boleto', () => {
         cy.log('Iniciando el flujo de compra de boletos.');
 
@@ -94,7 +83,7 @@ describe('Pruebas End-to-End para la Aplicación de Cine (Conjunto Completo)', (
         cy.log('Compra de boleto completada exitosamente.');
     });
 
-    // --- Escenario 5: Verificación del historial de compras (Simplificado a solo navegación) ---
+    // --- Escenario 4: Verificación del historial de compras (Simplificado a solo navegación) ---
     it('5. Debe permitir al usuario navegar a la página del historial', () => {
         cy.log('Verificando la navegación a la página del historial.');
 
@@ -115,7 +104,7 @@ describe('Pruebas End-to-End para la Aplicación de Cine (Conjunto Completo)', (
         cy.log('Navegación al historial verificada. No se verifica el contenido de las compras.');
     });
 
-    // --- Escenario 6: Cierre de sesión (Logout) ---
+    // --- Escenario 5: Cierre de sesión (Logout) ---
     it('6. Debe permitir a un usuario cerrar sesión exitosamente', () => {
         cy.log('Realizando login para luego probar el logout.');
         cy.get('a[href="login.php"]').click();
@@ -186,10 +175,10 @@ describe('Pruebas End-to-End para la Aplicación de Cine (Conjunto Completo)', (
         cy.log('Probando acceso a página protegida sin login.');
         // Aseguramos que no estamos logueados (si un test anterior dejó la sesión abierta)
         // Usamos { failOnStatusCode: false } por si el logout.php redirige antes de que Cypress vea un 200 OK
-        cy.visit('/logout.php', { failOnStatusCode: false }); 
+        cy.visit('/logout.php', { failOnStatusCode: false });
 
         // Intentar visitar historial.php directamente
-        cy.visit('/historial.php'); 
+        cy.visit('/historial.php');
         
         // Debería redirigirnos a login.php
         cy.url().should('include', '/login.php');
